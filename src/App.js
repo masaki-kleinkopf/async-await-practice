@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import { useEffect, useState } from "react"
+import { getDog } from "./apiCalls";
 import './App.css';
 
 function App() {
+  const [dog, setDog] = useState("")
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const getData = async() => {
+      try {
+      const data = await getDog();
+      setDog(data.message)
+    } catch (error) {
+      setError(error.message)
+      console.log("ERROR")
+    }
+    }
+    getData()
+  },[])
+
+  const handleClick = async () => {
+    try {
+      const data = await getDog();
+      setDog(data.message)
+    } catch (error) {
+      setError(error.message)
+      console.log("ERROR")
+    }
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleClick}>get dog</button>
+      {error && <p>something went wrong!</p>}
+      {dog && <img alt="dog pic" src={dog}></img>}
     </div>
   );
 }
