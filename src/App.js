@@ -6,8 +6,7 @@ function App() {
   const [dog, setDog] = useState("")
   const [error, setError] = useState("")
 
-  useEffect(() => {
-    const getData = async() => {
+  const getData = async() => {
       try {
       const data = await getDog();
       setDog(data.message)
@@ -15,18 +14,14 @@ function App() {
       setError(error.message)
       console.log("ERROR")
     }
-    }
-    getData()
+  }
+
+  useEffect(() => {
+    getData();
   },[])
 
   const handleClick = async () => {
-    try {
-      const data = await getDog();
-      setDog(data.message)
-    } catch (error) {
-      setError(error.message)
-      console.log("ERROR")
-    }
+    getData();
   }
 
 
